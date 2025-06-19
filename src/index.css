@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Inknut+Antiqua:wght@300;400;500;600;700;800;900&family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&family=Outfit:wght@100..900&family=Prata&display=swap');
+
+@import "tailwindcss";
+
+*{
+  font-family: "Nunito Sans", sans-serif;
+}
+
+@theme{
+  --color-primary : #997272;
+  --color-secondary :#887070;
+  --color-text : #321B1B;
+  --color-subtext : #483440;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
