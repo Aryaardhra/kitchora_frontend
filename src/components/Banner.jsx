@@ -1,30 +1,54 @@
 import React from 'react'
-import offer_deal from "../assets/offer_deal.png"
-import offer_deal_ph from "../assets/offer_deal_ph.png"
-import{ features } from "../assets/greencart_assets/assets"
+import banner_2 from "../assets/banner_2.png";
+import banner_3 from "../assets/banner_3.png";
+import banner_4 from "../assets/banner_4.png";
+import Carousel from './Carousel';
 
+const slides = [
+ 
+  {
+    src: banner_2,
+    title: "Fastest Delivery",
+    description: "Groceries delivered in under 30 minutes.",
+    type: "image",
+  },
+  {
+    src: banner_3,
+    title: "Freshness Guaranteed",
+    description: "Fresh produce straight from the source.",
+    type: "image",
+  },
+    {
+    src: banner_4,
+    title: "Affordable Prices",
+    description: "Quality groceries at unbeatable prices.",
+    type: "image",
+  },
+];
 
 const Banner = () => {
   return (
     <>
-    <div className="relative mt-24">
-      <img src={offer_deal} alt="" className="w-full h-96 hidden md:block" />
-      <img src={offer_deal_ph} alt="" className="w-full  md:hidden" />
-
-      <div className="absolute inset-0 flex flex-col items-center md:items-end md:justify-center pt-16 md:pt-0 md:pr-24">
-        <div>
-          <h1 className="text-2xl md:text-3xl font-semibold text-primary mb-6">Why We Are The Best</h1>
-             { features.map((feature, index) => (
-              <div key={index} className="flex items-center gap-4 mt-2">
-                <img src={feature.icon} alt="" className="md:w-11 w-9" />
-                <div>
-                <h3 className="text-lg md:text-xl font-semibold">{feature.title}</h3>
-                <p className="text-gray-500/70 text-xs md:text-sm">{feature.description}</p>
-                </div>
-              </div>
-             ))}
-        </div>
-      </div>
+      <div className="relative w-full overflow-hidden mt-20">
+      <Carousel autoSlide={true} autoSlideInterval={3000}>
+        {slides.map((slide, index) => (
+          <>
+          <div key={index} className="relative w-full h-[360px] overflow-hidden">
+            {slide.type === "image" ? (
+              <img src={slide.src} alt={slide.title} className="w-full h-full object-cover" />
+            ) : (
+              <video src={slide.src} autoPlay muted loop className="w-full h-full object-cover" />
+            )}
+            <div className="absolute md:bottom-30 bottom-30 left-10 md:left-30  bg-opacity-50 text-black p-4 rounded">
+               <h2 className="text-4xl font-bold text-amber-950">why we are best ...</h2>
+              <h4 className="text-2xl mt-8 font-bold text-cyan-950">{slide.title}</h4>
+              <p className="mt-2 text-black font-semibold">{slide.description}</p>
+            </div>
+            </div>
+   </>
+        ))}
+      
+      </Carousel>
     </div>
     </>
   )
