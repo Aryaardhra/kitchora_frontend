@@ -66,7 +66,6 @@ const Cart = () => {
                 items : cartArray.map(item => ({ product : item._id, quantity : item.quantity })),
                 address : selectedAddress._id
             } )
-
             if(data.success){
                window.location.replace(data.url)
             } else {
