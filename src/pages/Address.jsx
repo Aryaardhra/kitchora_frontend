@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { assets } from '../assets/greencart_assets/assets'
 import location from "../assets/location.svg"
+import { useAppContext } from '../context/AppContext'
+import toast from 'react-hot-toast'
 //Input field component 
 
 const InputField = ({ type, placeholder, name, handleChange, address})  => (
@@ -16,7 +18,9 @@ const InputField = ({ type, placeholder, name, handleChange, address})  => (
 
 const Address = () => {
 
-    const [address, setAddresses] = useState({
+  const {axios, user, navigate} = useAppContext();
+
+    const [address, setAddress] = useState({
         firstName : "",
         lastName : "",
         email : "",
@@ -31,15 +35,35 @@ const Address = () => {
     const handleChange = (e) => {
         const { name, value } = e.target;
 
-        setAddresses((prevAddress) => ({
+        setAddress((prevAddress) => ({
             ...prevAddress,
             [name] : value,
         }))
+       // console.log(address)
     }
 
     const onSubmitHandler = async(e) => {
-     e.preventDefault();
-    }
+     try {
+      e.preventDefault();
+      const {data} = await axios.post("/api/address/add", {address});
+
+      if(data.success){
+        toast.success(data.message)
+        navigate("/cart")
+      } else {
+        toast.error(data.message)
+      }
+     } catch (error) {
+      toast.error(error.message)
+     }
+    };
+
+    useEffect(()=>{
+      if(!user){
+        navigate("/cart")
+      }
+    },[]);
+
   return (
     <div className="mt-16 pb-16">
         <p className="text-2xl md:text-3xl text-gray-500">Add Shipping <span className="font-semibold text-primary">Address</span></p>

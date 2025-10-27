@@ -16,6 +16,7 @@ import AddProduct from "../pages/seller/AddProduct.jsx"
 import ProductList from "../pages/seller/ProductList.jsx"
 import SellerRoute from "./SellerRoute.jsx"
 import Orders from "../pages/seller/Orders.jsx"
+import Loading from "../components/Loading.jsx"
 
 const router = createBrowserRouter([
 
@@ -35,6 +36,7 @@ const router = createBrowserRouter([
             {path : "/cart", element : <Cart />},
             {path : "/add-address", element : <Address />},
             {path : "/my-orders", element : <MyOrder />},
+            {path : "/loader", element : <Loading />},
             {path: "*", element: <NotFound />},
              {
         path: 'seller',

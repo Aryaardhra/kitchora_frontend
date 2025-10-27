@@ -5,9 +5,20 @@ import { assets, dummyOrders } from '../../assets/greencart_assets/assets';
 const Orders = () => {
     
     const [orders, setOrders] = useState([]);
+
+    const {currency, axios, toast} = useAppContext();
     
     const fetchOrders = async () => {
-        setOrders(dummyOrders);
+        try {
+            const { data } = await axios.get("/api/order/seller");
+            if(data.success){
+                setOrders(data.orders)
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     };
 
     useEffect(() => {

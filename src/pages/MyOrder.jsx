@@ -1,17 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import {dummyOrders } from '../assets/greencart_assets/assets';
+import { useAppContext } from '../context/AppContext';
 
 const MyOrder = () => {
 
-    const [MyOrders, setMyOrders] = useState([]);
-    
+    const [myOrders, setMyOrders] = useState([]);
+
+    const {currency, axios, user, toast} = useAppContext();
+
     const fetchMyOrders = async () => {
-        setMyOrders(dummyOrders)
+        try {
+            const { data } = await axios.get("/api/order/user");
+            if(data.success){
+                setMyOrders(data.orders)
+            }else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error(error.message)
+        }
     };
 
     useEffect(()=> {
-        fetchMyOrders();
-    },[]);
+        if(user){
+            fetchMyOrders();
+        }
+    },[user]);
 
   return (
     <>
@@ -20,7 +34,7 @@ const MyOrder = () => {
             <p className="text-2xl font-medium uppercase">My Orders</p>
             <div className="w-16 h-0 5 bg-primary rounded-full"></div>
         </div>
-        { MyOrders.map((order, index) => (
+        { myOrders?.map((order, index) => (
             <div key={index} className="border border-gray-300 rounded-lg mb-10 p-4 py-5 max-w-4xl">
                 <p className="flex justify-between md:items-center text-gray-400 md:font-medium max-md:flex-col">
                     <span>OrderId : {order._id}</span>
