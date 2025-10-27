@@ -22,9 +22,8 @@ export const AppContext = createContext();
     const [products, setProducts] = useState([]);
     const [cartItems, setCartItems] = useState({});
     const [searchQuery, setSearchQuery] = useState({});
- //console.log(import.meta.env.VITE_BACKEND_URL);
-    //fetch seller status
 
+    //fetch seller status
     const fetchSeller = async () => {
         try {
             const { data } = await axios.get("/api/seller/is-auth", {withCredentials: true});
