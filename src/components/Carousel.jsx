@@ -20,8 +20,9 @@ const Carousel = ({ children:slides, autoSlide = false, autoSlideInterval = 3000
 
   return (
     <>
-        <div className="flex transition-transform  ease-out duration-500"
-        style={{ transform : `translateX(-${current * 100 }%)`}}
+        <div
+        className="flex transition-transform ease-in-out duration-[1500ms]"
+        style={{ transform: `translateX(-${current * 100}%)` }}
         >
                {slides.map((slide, i) =>
           <div key={i} className="relative w-full h-full flex-shrink-0">
