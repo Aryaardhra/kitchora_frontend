@@ -4,16 +4,27 @@ import logo from "../assets/logo.png"
 import search_icon from "../assets/icon/search_icon.svg"
 import DragHandleOutlinedIcon from '@mui/icons-material/DragHandleOutlined';
 import profile_icon from "../assets/icon/profile_icon.png"
-
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import { useAppContext } from '../context/AppContext';
+import toast from 'react-hot-toast';
+
 const Navbar = () => {
     const [open, setOpen] = useState(false)
-    const { user, setUser, setUserLogin, navigate, searchQuery, setSearchQuery, getCartCount } = useAppContext();
+    const { user, setUser, setUserLogin, navigate, searchQuery, setSearchQuery, getCartCount, axios } = useAppContext();
 
     const logout = async() => {
-        setUser(null);
-        navigate("/");
+       try {
+        const { data } = await axios.get("/api/user/logout");
+        if(data.success){
+            toast.success(data.message);
+            setUser(null);
+            navigate("/")
+        } else {
+            toast.error(data.message)
+        }
+       } catch (error) {
+        toast.error(error.message);
+       }
     };
 
     useEffect(() => {
